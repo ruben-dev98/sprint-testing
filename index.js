@@ -1,14 +1,14 @@
 class Room {
 
-    constructor(name, bookings, rate, discount) {
+    constructor(name, rate, discount) {
         this.name = name;
-        this.bookings = bookings;
+        this.bookings = [];
         this.rate = rate;
         this.discount = discount;
     }
 
     isOccupied(date) {
-
+        return this.bookings.some(booking => booking.checkIn <= date && booking.checkOut > date);
     }
 
     occupancyPercentage(startDate, endDate) {
@@ -26,13 +26,13 @@ class Room {
 
 class Booking {
 
-    constructor(name, email, checkIn, checkOut, discount, Room) {
-        this.name = name;
-        this.email = email;
+    constructor(template, checkIn, checkOut, discount) {
+        this.name = template.name;
+        this.email = template.email;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.discount = discount;
-        this.Room = Room;
+        this.Room = {};
     }
 
     getFee() {

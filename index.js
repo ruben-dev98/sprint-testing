@@ -6,9 +6,9 @@ class Room {
 
     constructor({name, rate, discount}) {
         this.name = name;
-        this.bookings = [];
         this.rate = rate;
         this.discount = discount;
+        this.bookings = [];
     }
 
     isOccupied(date) {
@@ -19,10 +19,26 @@ class Room {
     }
 
     occupancyPercentage(startDate, endDate) {
+        if(typeof(startDate) !== 'string' && typeof(endDate) !== 'string') throw new Error('Invalid Format')
+        if(isNaN(Date.parse(startDate)) && isNaN(Date.parse(endDate))) throw new Error('Invalid Date');
 
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let occupiedDays = 0;
+        let totalDays = 0;
+
+        while(startDate <= endDate) {
+            totalDays++;
+            if(this.isOccupied(start.toString())) {
+                occupiedDays++;
+            }
+            start.setDate(start.getDate() + 1);
+        }
+
+        return (occupiedDays/totalDays*100).toFixed(0);
     }
 
-    errorDisocunt() {
+    errorDiscount() {
         if(this.discount > 100)this.discount = 100;
         if(this.discount < 0)this.discount = 0;
     }
@@ -55,7 +71,7 @@ class Booking {
         this.room.priceToCent()  - (this.room.priceToCent() * this.discount/PERCENTAGE);
     }
 
-    errorDisocunt() {
+    errorDiscount() {
         ///if(this.room.discount === 100) this.discount = 10;
         if(this.discount > 100)this.discount = 100;
         if(this.discount < 0)this.discount = 0;

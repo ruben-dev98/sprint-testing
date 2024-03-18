@@ -52,7 +52,7 @@ class Booking {
     }
 
     errorDisocunt() {
-        if(this.room.discount === 100) this.discount = 10;
+        ///if(this.room.discount === 100) this.discount = 10;
         if(this.discount > 100)this.discount = 100;
         if(this.discount < 0)this.discount = 0;
     }

@@ -1,8 +1,11 @@
-export class Room {
-    name;
-    Bookings;
-    Rate;
-    Discount;
+class Room {
+
+    constructor(name, bookings, rate, discount) {
+        this.name = name;
+        this.bookings = bookings;
+        this.rate = rate;
+        this.discount = discount;
+    }
 
     isOccupied(date) {
 
@@ -21,14 +24,25 @@ export class Room {
     }
 }
 
-export class Booking {
-    name;
-    email;
-    checkIn;
-    checkOut;
-    discount;
+class Booking {
+
+    constructor(name, email, checkIn, checkOut, discount, Room) {
+        this.name = name;
+        this.email = email;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.discount = discount;
+        this.Room = Room;
+    }
 
     getFee() {
-
+        
     }
+
+    
+}
+
+module.exports = {
+    Room,
+    Booking
 }

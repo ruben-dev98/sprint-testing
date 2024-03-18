@@ -1,6 +1,6 @@
 class Room {
 
-    constructor(name, rate, discount) {
+    constructor({name}, rate, discount) {
         this.name = name;
         this.bookings = [];
         this.rate = rate;
@@ -8,6 +8,7 @@ class Room {
     }
 
     isOccupied(date) {
+        if(isNaN(Date.parse(date))) throw new Error('Invalid Date');
         return this.bookings.some(booking => booking.checkIn <= date && booking.checkOut > date);
     }
 
@@ -26,9 +27,9 @@ class Room {
 
 class Booking {
 
-    constructor(template, checkIn, checkOut, discount) {
-        this.name = template.name;
-        this.email = template.email;
+    constructor({name, email}, checkIn, checkOut, discount) {
+        this.name = name;
+        this.email = email;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.discount = discount;

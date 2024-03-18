@@ -18,46 +18,55 @@ const booking3 = new Booking({...bookingTemplate}, '2024-01-03', '2024-01-04', 1
 room.bookings = [booking1, booking2, booking3];
 const aRooms = [room, room1, room2, room3];
 
-test('Room is occupied is inside range', () => {
-    expect(room.isOccupied('2024-01-02')).toBe(true);
-});
+describe('Room', () => {
+    
+    describe('occupiedRoom', () => {
+        test('Room is occupied is inside range', () => {
+            expect(room.isOccupied('2024-01-02')).toBe(true);
+        });
+        
+        test('Room is occupied is before range', () => {
+            expect(room.isOccupied('2024-12-01')).toBe(false);
+        });
+        
+        test('Room is occupied is after range', () => {
+            expect(room.isOccupied('2024-02-01')).toBe(false);
+        });
+        
+        test('Room is occupied is on checkout day but the rooms is available', () => {
+            expect(room.isOccupied('2024-01-04')).toBe(false);
+        });
+        
+        test('Room is occupied receives a string that is not a date', () => {
+            expect(room.isOccupied('Hola')).toThrow(Error('Invalid Date'));
+        });
+    })
 
-test('Room is occupied is before range', () => {
-    expect(room.isOccupied('2024-12-01')).toBe(false);
-});
+    describe('occupancyPercentage', () => {
+        
+        test('Room occupancy percentage', () => {
+            expect(room.occupancyPercentage('2024-01-02')).toBe(false);
+        });
+    
+    })
+    
+    describe('totalOccupancyPercentage', () => {
+        test('Room total ocupancy percentage', () => {
+            expect(Room.totalOccupancyPercentage(aRooms, '2024-01-01', '2024-02-01')).toBe(true);
+        });
+    })
 
-test('Room is occupied is after range', () => {
-    expect(room.isOccupied('2024-02-01')).toBe(false);
-});
+    describe('availableRooms', () => {
+        test('Room available rooms', () => {
+            expect(Room.availableRooms(aRooms, '2024-01-01', '2024-02-01')).toBe(true);
+        });
+    })
 
-test('Room is occupied is on checkout day but the rooms is available', () => {
-    expect(room.isOccupied('2024-01-04')).toBe(false);
-});
+})
 
-test('Room is occupied receives a string that is not a date', () => {
-    expect(room.isOccupied('Hola'));
-});
 
-test('Room is occupied receives a number that is not a date', () => {
-    expect(room.isOccupied('2024-01-02')).toBe(false);
-});
-
-test('Rooms is occupied is outside range', () => {
-    expect(room.isOccupied('2024-01-02')).toBe(true);
-});
-
-test('Room occupancy percentage', () => {
-    expect(room.occupancyPercentage('2024-01-02')).toBe(false);
-});
-
-test('Room total ocupancy percentage', () => {
-    expect(Room.totalOccupancyPercentage(aRooms, '2024-01-01', '2024-02-01')).toBe(true);
-});
-
-test('Room available rooms', () => {
-    expect(Room.availableRooms(aRooms, '2024-01-01', '2024-02-01')).toBe(true);
-});
-
-test('Booking get fee', () => { 
-    expect(booking1.getFee()).toBe(true);
-});
+describe('Booking', () => {
+    test('Booking get fee', () => { 
+        expect(booking1.getFee()).toBe(true);
+    });
+})

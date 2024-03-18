@@ -18,6 +18,15 @@ class Room {
 
     }
 
+    errorDisocunt() {
+        if(this.discount > 100)this.discount = 100;
+        if(this.discount < 0)this.discount = 0;
+    }
+
+    static priceToCent() {
+        return (this.rate - ((this.rate * this.discount)/100)) * 100;
+    }
+
     static totalOccupancyPercentage(rooms, startDate, endDate) {
 
     }
@@ -35,14 +44,18 @@ class Booking {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.discount = discount;
-        this.Room = {};
+        this.room = new Room();
     }
 
     getFee() {
         
     }
 
-    
+    errorDisocunt() {
+        if(this.room.discount === 100) this.discount = 10;
+        if(this.discount > 100)this.discount = 100;
+        if(this.discount < 0)this.discount = 0;
+    }
 }
 
 module.exports = {

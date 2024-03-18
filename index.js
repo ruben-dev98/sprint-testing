@@ -1,4 +1,8 @@
+const CENTS = 100;
+const PERCENTAGE = 100;
+
 class Room {
+    
 
     constructor({name, rate, discount}) {
         this.name = name;
@@ -23,8 +27,8 @@ class Room {
         if(this.discount < 0)this.discount = 0;
     }
 
-    static priceToCent() {
-        return (this.rate - ((this.rate * this.discount)/100)) * 100;
+    priceToCent() {
+        return (this.rate - ((this.rate * this.discount)/PERCENTAGE)) * CENTS;
     }
 
     static totalOccupancyPercentage(rooms, startDate, endDate) {
@@ -48,7 +52,7 @@ class Booking {
     }
 
     getFee() {
-        
+        this.room.priceToCent()  - (this.room.priceToCent() * this.discount/PERCENTAGE);
     }
 
     errorDisocunt() {

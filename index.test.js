@@ -12,16 +12,13 @@ const booking1Room = new Booking({ ...bookingTemplate }, '2024-01-02', '2024-01-
 room.bookings = [bookingRoom, booking1Room];
 
 const room1 = new Room('Double Bed', 120, 20);
-// bookingRoom.room = room1;
-// booking1Room.room = room1;
 room1.bookings = [bookingRoom, booking1Room];
 
 const room2 = new Room('Double Bed', 120, 20);
-// bookingRoom.room = room2;
-// booking1Room.room = room2;
 room2.bookings = [bookingRoom, booking1Room];
 
 const aRooms = [room, room1, room2];
+const aRoomsEmpty = [];
 
 describe('Room', () => {
 
@@ -148,12 +145,13 @@ describe('Room', () => {
     })
 
     describe('availableRooms', () => {
+        
         test('Available rooms returns all rooms', () => {
-            expect(Room.availableRooms(aRooms, '2024-01-15', '2024-02-01')).toEqual(aRooms);
+            expect(Room.availableRooms(aRooms, '2024-01-15', '2024-02-01')).toStrictEqual(aRooms);
         });
 
         test('Available rooms returns an empty array', () => {
-            expect(Room.availableRooms(aRooms, '2024-01-01', '2024-02-01')).toEqual([]);
+            expect(Room.availableRooms(aRooms, '2024-01-01', '2024-02-01')).toStrictEqual([]);
         });
 
         test('Available rooms Array is empty', () => {
@@ -189,32 +187,41 @@ describe('Room', () => {
 
 describe('Booking', () => {
     const room = new Room('Double Bed', 120, 20);
-    const room1 = new Room('Double Bed', 'Hola', 20);
-    const room2 = new Room('Double Bed', 120, 'Hola');
     const bookingRoom = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room);
-    const bookingRoom1 = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room1);
-    const bookingRoom2 = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room2);
-    const bookingRoom3 = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 'Hola', room);
-    
+
     describe('getFee', () => {
+        
         test('Get fee result is 8640', () => {
             expect(bookingRoom.getFee()).toBe(8640);
         });
 
         test('Get fee room rate is not a number', () => {
-            expect(() => bookingRoom1.getFee()).toThrow('Invalid Rate Room Format');
+            room.rate = 'Hola';
+            expect(() => bookingRoom.getFee()).toThrow('Invalid Rate Room Format');
         });
 
         test('Get fee room discount is not a number', () => {
-            expect(() => bookingRoom2.getFee()).toThrow('Invalid Discount Room Format');
+            room.discount = 'Hola';
+            expect(() => bookingRoom.getFee()).toThrow('Invalid Discount Room Format');
         });
 
         test('Get fee booking discount is not a number', () => {
-            expect(() => bookingRoom3.getFee()).toThrow('Invalid Discount Room Format');
+            bookingRoom.discount = 'Hola';
+            room.discount = 20;
+            room.rate = 120;
+            expect(() => bookingRoom.getFee()).toThrow('Invalid Discount Booking Format');
         });
 
-        /*test('Get fee result is', () => {
-            expect(bookingRoom.getFee()).toBe(8640);
-        });*/
+        test('Get fee result is 12000', () => {
+            room.discount = 0;
+            bookingRoom.discount = 0;
+            expect(bookingRoom.getFee()).toBe(12000);
+        });
+
+        test('Get fee result is 0', () => {
+            room.discount = 100;
+            bookingRoom.discount = 100;
+            expect(bookingRoom.getFee()).toBe(0);
+        });
     });
 })

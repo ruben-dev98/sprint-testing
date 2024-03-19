@@ -12,7 +12,6 @@ class Room {
         this.name = name;
         this.rate = rate;
         this.discount = discount;
-        this.errorDiscount();
         this.bookings = [];
     }
 
@@ -84,7 +83,6 @@ class Room {
         const aAvailableRooms = rooms.filter(room => {
             if (room.occupancyPercentage(startDate, endDate) > ZERO_PERCENTAGE) {
                 return false;
-                
             }
             return true;
         });
@@ -104,7 +102,7 @@ class Booking {
     }
 
     getFee() {
-        //this.room.errorDiscount();
+        this.room.errorDiscount();
         this.errorDiscount();
         return Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }

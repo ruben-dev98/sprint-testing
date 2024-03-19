@@ -103,11 +103,11 @@ class Booking {
 
     getFee() {
         this.room.errorDiscount();
-        this.errorDiscount();
+        this.#errorDiscount();
         return Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }
 
-    errorDiscount() {
+    #errorDiscount() {
         if (isNaN(this.discount)) throw new Error('Invalid Discount Booking Format');
         if (this.room.discount === ONE_HUNDRED_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
         if (this.discount > ONE_HUNDRED_PERCENTAGE) this.discount = ONE_HUNDRED_PERCENTAGE;

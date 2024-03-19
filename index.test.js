@@ -205,14 +205,14 @@ describe('Booking', () => {
         });
 
         test('Get fee result is 12000', () => {
-            room.discount = 0;
-            bookingRoom.discount = 0;
+            room.discount = -10;
+            bookingRoom.discount = -10;
             expect(bookingRoom.getFee()).toBe(12000);
         });
 
         test('Get fee result is 0', () => {
-            room.discount = 100;
-            bookingRoom.discount = 100;
+            room.discount = 150;
+            bookingRoom.discount = 150;
             expect(bookingRoom.getFee()).toBe(0);
         });
     });

@@ -8,7 +8,7 @@ const ZERO_PERCENTAGE = 0;
 
 class Room {
 
-    constructor(name, rate, discount) {
+    constructor({name, rate, discount}) {
         this.name = name;
         this.rate = rate;
         this.discount = discount;

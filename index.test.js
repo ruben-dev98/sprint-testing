@@ -1,21 +1,23 @@
 const { Room, Booking } = require('./index.js');
 
+const roomTemplate = { name: 'Double Bed', rate: 120, discount: 20 };
+
 const bookingTemplate = {
     name: 'Ruben D',
     email: 'ruben.dopico.dev@gmail.com'
 };
 
-const room = new Room('Double Bed', 120, 20);
+const room = new Room({...roomTemplate});
 const bookingRoom = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room);
 const booking1Room = new Booking({ ...bookingTemplate }, '2024-01-02', '2024-01-03', 10, room);
 room.bookings = [bookingRoom, booking1Room];
 
-const room1 = new Room('Double Bed', 120, 20);
+const room1 = new Room({...roomTemplate});
 const bookingRoom1 = new Booking({ ...bookingTemplate }, '2024-01-03', '2024-01-04', 10, room);
 const booking1Room1 = new Booking({ ...bookingTemplate }, '2024-01-04', '2024-01-05', 10, room);
 room1.bookings = [bookingRoom1, booking1Room1];
 
-const room2 = new Room('Double Bed', 120, 20);
+const room2 = new Room({...roomTemplate});
 const bookingRoom2 = new Booking({ ...bookingTemplate }, '2024-01-05', '2024-01-06', 10, room);
 const booking1Room2 = new Booking({ ...bookingTemplate }, '2024-01-06', '2024-01-07', 10, room);
 room2.bookings = [bookingRoom2, booking1Room2];
@@ -183,7 +185,7 @@ describe('Room', () => {
 });
 
 describe('Booking', () => {
-    const room = new Room('Double Bed', 120, 20);
+    const room = new Room({...roomTemplate});
     const bookingRoom = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room);
 
     describe('getFee', () => {

@@ -55,16 +55,21 @@ class Room {
     }
 
     errorDiscount() {
+        if(isNaN(this.discount)) throw new Error('Invalid Discount Room Format');
+        
         if (this.discount > 100) this.discount = 100;
         if (this.discount < 0) this.discount = 0;
     }
 
     priceToCent() {
+        if(isNaN(this.rate)) throw new Error('Invalid Rate Room Format')
         return (this.rate - ((this.rate * this.discount) / ONE_HUNDRED_PERCENTAGE)) * CENTS;
     }
 
     static totalOccupancyPercentage(rooms, startDate, endDate) {
+        if(!Array.isArray(rooms)) throw new Error('Not an Array')
         if(rooms.length === 0) throw new Error('Array is empty');
+        
         let totalPercentage = INIT_TOTAL_OCCUPANCY_PERCENTAGE;
         rooms.forEach(room => {
             totalPercentage += room.occupancyPercentage(startDate, endDate);
@@ -74,6 +79,8 @@ class Room {
     }
 
     static availableRooms(rooms, startDate, endDate) {
+        if(!Array.isArray(rooms)) throw new Error('Not an Array')
+        if(rooms.length === 0) throw new Error('Array is empty');
         const aAvailableRooms = rooms.filter(room => {
             if (room.occupancyPercentage(startDate, endDate) > ZERO_PERCENTAGE) {
                 return false;
@@ -87,22 +94,24 @@ class Room {
 
 class Booking {
 
-    constructor({ name, email }, checkIn, checkOut, discount) {
+    constructor({ name, email }, checkIn, checkOut, discount, room) {
         this.name = name;
         this.email = email;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.discount = discount;
-        //this.errorDiscount();
-        //this.room = {};
+        this.room = room;
     }
 
     getFee() {
-        //return Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
+        //this.room.errorDiscount();
+        this.errorDiscount();
+        return Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }
 
     errorDiscount() {
-        //if (this.room.discount === ONE_HUNDRED_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
+        if(isNaN(this.discount)) throw new Error('Invalid Discount Booking Format');
+        if (this.room.discount === ONE_HUNDRED_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
         if (this.discount > ONE_HUNDRED_PERCENTAGE) this.discount = ONE_HUNDRED_PERCENTAGE;
         if (this.discount < ZERO_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
     }

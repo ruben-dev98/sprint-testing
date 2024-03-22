@@ -1,33 +1,23 @@
-const { Room, Booking } = require('./index.js');
+const { classTemplate } = require('./functionHelpers.js');
 
-const roomTemplate = { name: 'Double Bed', rate: 120, discount: 20 };
 
-const bookingTemplate = {
-    name: 'Ruben D',
-    email: 'ruben.dopico.dev@gmail.com'
-};
-
-const room = new Room({...roomTemplate});
-const bookingRoom = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room);
-const booking1Room = new Booking({ ...bookingTemplate }, '2024-01-02', '2024-01-03', 10, room);
-room.bookings = [bookingRoom, booking1Room];
-
-const room1 = new Room({...roomTemplate});
-const bookingRoom1 = new Booking({ ...bookingTemplate }, '2024-01-03', '2024-01-04', 10, room);
-const booking1Room1 = new Booking({ ...bookingTemplate }, '2024-01-04', '2024-01-05', 10, room);
-room1.bookings = [bookingRoom1, booking1Room1];
-
-const room2 = new Room({...roomTemplate});
-const bookingRoom2 = new Booking({ ...bookingTemplate }, '2024-01-05', '2024-01-06', 10, room);
-const booking1Room2 = new Booking({ ...bookingTemplate }, '2024-01-06', '2024-01-07', 10, room);
-room2.bookings = [bookingRoom2, booking1Room2];
-
-const aRooms = [room, room1, room2];
 
 describe('Room', () => {
 
     describe('occupiedRoom', () => {
-
+        const bookings = [
+            {
+                checkIn: '2024-01-01',
+                checkOut: '2024-01-02',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-02',
+                checkOut: '2024-01-03',
+                discount: 10    
+            },
+        ];
+        const room = classTemplate(bookings);
         test('Is occupied inside range', () => {
             expect(room.isOccupied('2024-01-02')).toBe(true);
         });
@@ -62,7 +52,19 @@ describe('Room', () => {
     });
 
     describe('occupancyPercentage', () => {
-
+        const bookings = [
+            {
+                checkIn: '2024-01-01',
+                checkOut: '2024-01-02',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-02',
+                checkOut: '2024-01-03',
+                discount: 10    
+            },
+        ];
+        const room = classTemplate(bookings);
         test('Occupancy percentage that is 0 percent', () => {
             expect(room.occupancyPercentage('2024-01-05', '2024-01-15')).toBe(0);
         });
@@ -185,8 +187,20 @@ describe('Room', () => {
 });
 
 describe('Booking', () => {
-    const room = new Room({...roomTemplate});
-    const bookingRoom = new Booking({ ...bookingTemplate }, '2024-01-01', '2024-01-02', 10, room);
+    const bookings = [
+        {
+            checkIn: '2024-01-01',
+            checkOut: '2024-01-02',
+            discount: 10    
+        },
+        {
+            checkIn: '2024-01-02',
+            checkOut: '2024-01-03',
+            discount: 10    
+        },
+    ];
+    const room = classTemplate(bookings);
+    const booking = room.bookings[0];
 
     describe('getFee', () => {
         test('Get fee room rate is not a number', () => {
@@ -200,22 +214,22 @@ describe('Booking', () => {
         });
 
         test('Get fee booking discount is not a number', () => {
-            bookingRoom.discount = 'Hola';
+            booking.discount = 'Hola';
             room.discount = 20;
             room.rate = 120;
-            expect(() => bookingRoom.getFee()).toThrow('Invalid Discount Booking Format');
+            expect(() => booking.getFee()).toThrow('Invalid Discount Booking Format');
         });
 
         test('Get fee result is 12000', () => {
             room.discount = -10;
-            bookingRoom.discount = -10;
-            expect(bookingRoom.getFee()).toBe(12000);
+            booking.discount = -10;
+            expect(booking.getFee()).toBe(12000);
         });
 
         test('Get fee result is 0', () => {
             room.discount = 150;
-            bookingRoom.discount = 150;
-            expect(bookingRoom.getFee()).toBe(0);
+            booking.discount = 150;
+            expect(booking.getFee()).toBe(0);
         });
     });
 });

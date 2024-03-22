@@ -1,5 +1,5 @@
 const { classTemplate } = require('./functionHelpers.js');
-
+const { Booking, Room } = require("./index");
 
 
 describe('Room', () => {
@@ -100,7 +100,48 @@ describe('Room', () => {
     });
 
     describe('totalOccupancyPercentage', () => {
+        const bookings = [
+            {
+                checkIn: '2024-01-01',
+                checkOut: '2024-01-02',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-02',
+                checkOut: '2024-01-03',
+                discount: 10    
+            },
+        ];
 
+        const bookingsRoom1 = [
+            {
+                checkIn: '2024-01-03',
+                checkOut: '2024-01-04',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-04',
+                checkOut: '2024-01-05',
+                discount: 10    
+            },
+        ];
+
+        const bookingsRoom2 = [
+            {
+                checkIn: '2024-01-05',
+                checkOut: '2024-01-06',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-06',
+                checkOut: '2024-01-07',
+                discount: 10    
+            },
+        ];
+        const room = classTemplate(bookings);
+        const room1 = classTemplate(bookingsRoom1);
+        const room2 = classTemplate(bookingsRoom2);
+        const aRooms = [room, room1, room2];
         test('Total ocupancy percentage is 100', () => {
             expect(Room.totalOccupancyPercentage(aRooms, '2024-01-01', '2024-01-06')).toBe(100);
         });
@@ -143,7 +184,48 @@ describe('Room', () => {
     });
 
     describe('availableRooms', () => {
+        const bookings = [
+            {
+                checkIn: '2024-01-01',
+                checkOut: '2024-01-02',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-02',
+                checkOut: '2024-01-03',
+                discount: 10    
+            },
+        ];
 
+        const bookingsRoom1 = [
+            {
+                checkIn: '2024-01-03',
+                checkOut: '2024-01-04',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-04',
+                checkOut: '2024-01-05',
+                discount: 10    
+            },
+        ];
+
+        const bookingsRoom2 = [
+            {
+                checkIn: '2024-01-05',
+                checkOut: '2024-01-06',
+                discount: 10    
+            },
+            {
+                checkIn: '2024-01-06',
+                checkOut: '2024-01-07',
+                discount: 10    
+            },
+        ];
+        const room = classTemplate(bookings);
+        const room1 = classTemplate(bookingsRoom1);
+        const room2 = classTemplate(bookingsRoom2);
+        const aRooms = [room, room1, room2];
         test('Available rooms returns all rooms', () => {
             expect(Room.availableRooms(aRooms, '2024-01-15', '2024-02-01')).toMatchObject(aRooms);
         });

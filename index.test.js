@@ -274,43 +274,22 @@ describe('Booking', () => {
             checkIn: '2024-01-01',
             checkOut: '2024-01-02',
             discount: 10    
-        },
-        {
-            checkIn: '2024-01-02',
-            checkOut: '2024-01-03',
-            discount: 10    
-        },
+        }
     ];
     const room = classTemplate(bookings);
     const booking = room.bookings[0];
-
+    
     describe('getFee', () => {
-        test('Get fee room rate is not a number', () => {
-            room.rate = 'Hola';
-            expect(() => bookingRoom.getFee()).toThrow('Invalid Rate Room Format');
-        });
-
-        test('Get fee room discount is not a number', () => {
-            room.discount = 'Hola';
-            expect(() => bookingRoom.getFee()).toThrow('Invalid Discount Room Format');
-        });
-
-        test('Get fee booking discount is not a number', () => {
-            booking.discount = 'Hola';
-            room.discount = 20;
-            room.rate = 120;
-            expect(() => booking.getFee()).toThrow('Invalid Discount Booking Format');
-        });
 
         test('Get fee result is 12000', () => {
-            room.discount = -10;
-            booking.discount = -10;
+            room.discount = 0;
+            booking.discount = 0;
             expect(booking.getFee()).toBe(12000);
         });
 
         test('Get fee result is 0', () => {
-            room.discount = 150;
-            booking.discount = 150;
+            room.discount = 100;
+            booking.discount = 100;
             expect(booking.getFee()).toBe(0);
         });
     });

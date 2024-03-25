@@ -38,7 +38,7 @@ class Room {
 
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const numberOfDates = getTotalDays(start, end);
+        const numberOfDates = this.getTotalDays(start, end);
 
         return Math.round((numberOfDates.occupiedDays / numberOfDates.totalDays * ONE_HUNDRED_PERCENTAGE));
     }
@@ -74,7 +74,7 @@ class Room {
         return aAvailableRooms;
     }
 
-    static getTotalDays(start, end) {
+    getTotalDays(start, end) {
         let occupiedDays = INIT_OCCUPIED_DAYS;
         let totalDays = INIT_TOTAL_DAYS;
     
@@ -105,15 +105,7 @@ class Booking {
     }
 
     getFee() {
-        this.room.errorDiscount();
-        this.#errorDiscount();
-        return Room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
-    }
-
-    #errorDiscount() {
-        if (isNaN(this.discount)) throw new Error('Invalid Discount Booking Format');
-        if (this.discount > ONE_HUNDRED_PERCENTAGE) this.discount = ONE_HUNDRED_PERCENTAGE;
-        if (this.discount < ZERO_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
+        return this.room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }
 }
 

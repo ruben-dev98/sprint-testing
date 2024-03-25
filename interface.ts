@@ -1,4 +1,4 @@
-import { Room, Booking } from "./index"
+import { Room } from "./index"
 
 export interface iDays {
     occupiedDays: number,

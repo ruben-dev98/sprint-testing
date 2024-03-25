@@ -9,7 +9,7 @@ export function classTemplate(bookings: iBookingTemplateSecond[]): Room {
         email: 'ruben.dopico.dev@gmail.com'
     };
 
-    const room = new Room({ ...roomTemplate });
+    const room = new Room(roomTemplate);
     bookings.forEach((booking) => {
         room.bookings.push(new Booking({...bookingTemplate, ...booking, room: room}));
     });

@@ -1,6 +1,6 @@
 import { iBookingTemplateSecond } from "./interface";
 import { Room } from './index';
-import { classTemplate } from "./functionHelpers";
+import { classTemplate } from "./functionHelper";
 
 
 

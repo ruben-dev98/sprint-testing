@@ -1,7 +1,5 @@
 import { iBooking, iDays, iRoom } from "./interface";
 
-const { getTotalDays } = require("./functionHelpers");
-
 const CENTS :number = 100;
 const ONE_HUNDRED_PERCENTAGE :number = 100;
 const INIT_TOTAL_DAYS :number = 0;

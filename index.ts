@@ -25,7 +25,6 @@ export class Room {
     }
 
     isOccupied(date: string): boolean {
-        if (typeof (date) !== 'string') throw new Error('Invalid Format')
         if (isNaN(Date.parse(date))) throw new Error('Invalid Date');
 
         const date_parse: number = new Date(date).getTime();
@@ -38,7 +37,6 @@ export class Room {
     }
 
     occupancyPercentage(startDate: string, endDate: string): number {
-        if (typeof (startDate) !== 'string' || typeof (endDate) !== 'string') throw new Error('Invalid Format')
         if (isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) throw new Error('Invalid Date');
 
         if (startDate > endDate) throw new Error('Start Date Greater Than End Date')
@@ -56,7 +54,6 @@ export class Room {
     }
 
     static totalOccupancyPercentage(rooms: Room[], startDate: string, endDate: string): number {
-        if (!Array.isArray(rooms)) throw new Error('Not an Array')
         if (rooms.length === 0) throw new Error('Array is empty');
 
         let totalPercentage: number = INIT_TOTAL_OCCUPANCY_PERCENTAGE;
@@ -68,7 +65,6 @@ export class Room {
     }
 
     static availableRooms(rooms: Room[], startDate: string, endDate: string): Room[] {
-        if (!Array.isArray(rooms)) throw new Error('Not an Array')
         if (rooms.length === 0) throw new Error('Array is empty');
         const aAvailableRooms: Room[] = rooms.filter(room => room.occupancyPercentage(startDate, endDate) === ZERO_PERCENTAGE);
         return aAvailableRooms;
@@ -112,8 +108,6 @@ export class Booking {
     }
 
     getFee(): number {
-        //this.room.errorDiscount();
-        //this.#errorDiscount();
-        return Math.min(0, this.room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE)));
+        return this.room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }
 }

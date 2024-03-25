@@ -13,6 +13,5 @@ export function classTemplate(bookings: iBookingTemplateSecond[]): Room {
     bookings.forEach((booking) => {
         room.bookings.push(new Booking({...bookingTemplate, ...booking, room: room}));
     });
-    
     return room;
 }

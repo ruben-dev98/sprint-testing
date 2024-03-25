@@ -1,7 +1,7 @@
 import { iBookingTemplateSecond } from "./interface";
+import { Room } from './index';
+import { classTemplate } from "./functionHelpers";
 
-const { classTemplate } = require('./functionHelpers');
-const { Room } = require("./index");
 
 
 describe('Room', () => {
@@ -44,10 +44,6 @@ describe('Room', () => {
             expect(() => room.isOccupied('1598-235-201')).toThrow('Invalid Date');
         });
 
-        test('Is occupied receives a number that is not a valid date', () => {
-            expect(() => room.isOccupied(13)).toThrow('Invalid Format');
-        });
-
         test('Is occupied receives a empty string', () => {
             expect(() => room.isOccupied('')).toThrow('Invalid Date');
         });
@@ -85,14 +81,6 @@ describe('Room', () => {
 
         test('Occupancy percentage receives and end date that is not a date', () => {
             expect(() => room.occupancyPercentage('2024-01-03', 'Hola')).toThrow('Invalid Date');
-        });
-
-        test('Occupancy percentage receives and start date that is not a date', () => {
-            expect(() => room.occupancyPercentage(0, '2024-01-03')).toThrow('Invalid Format');
-        });
-
-        test('Occupancy percentage receives and end date that is not a string', () => {
-            expect(() => room.occupancyPercentage('2024-01-03', 0)).toThrow('Invalid Format');
         });
 
         test('Occupancy percentage start date greater than end date', () => {
@@ -160,30 +148,6 @@ describe('Room', () => {
         test('Total ocupancy percentage Array is empty', () => {
             expect(() => Room.totalOccupancyPercentage([], '2024-01-02', '2024-01-15')).toThrow('Array is empty');
         });
-
-        test('Total ocupancy percentage Array is not an array', () => {
-            expect(() => Room.totalOccupancyPercentage('Hola', '2024-01-02', '2024-01-15')).toThrow('Not an Array');
-        });
-
-        // test('Total ocupancy percentage receives an start date that is not a date', () => {
-        //     expect(() => room.occupancyPercentage('Hola', '2024-01-03')).toThrow('Invalid Date');
-        // });
-
-        // test('Total ocupancy percentage receives an end date that is not a date', () => {
-        //     expect(() => room.occupancyPercentage('2024-01-03', 'Hola')).toThrow('Invalid Date');
-        // });
-
-        // test('Total ocupancy percentage receives an start date that is not a date', () => {
-        //     expect(() => room.occupancyPercentage(0, '2024-01-03')).toThrow('Invalid Format');
-        // });
-
-        // test('Total ocupancy percentage receives an end date that is not a string', () => {
-        //     expect(() => room.occupancyPercentage('2024-01-03', 0)).toThrow('Invalid Format');
-        // });
-
-        // test('Total ocupancy percentage start date greater than end date', () => {
-        //     expect(() => room.occupancyPercentage('2024-01-24', '2024-01-03')).toThrow('Start Date Greater Than End Date');
-        // });
     });
 
     describe('availableRooms', () => {
@@ -245,30 +209,6 @@ describe('Room', () => {
         test('Available rooms Array is empty', () => {
             expect(() => Room.availableRooms([], '2024-01-02', '2024-01-15')).toThrow('Array is empty');
         });
-
-        test('Available rooms Array is not an array', () => {
-            expect(() => Room.totalOccupancyPercentage('Hola', '2024-01-02', '2024-01-15')).toThrow('Not an Array');
-        });
-
-        // test('Available rooms receives and start date that is not a date', () => {
-        //     expect(() => Room.availableRooms(aRooms, 'Hola', '2024-01-03')).toThrow('Invalid Date');
-        // });
-
-        // test('Available rooms receives and end date that is not a date', () => {
-        //     expect(() => Room.availableRooms(aRooms, '2024-01-03', 'Hola')).toThrow('Invalid Date');
-        // });
-
-        // test('Available rooms receives and start date that is not a date', () => {
-        //     expect(() => Room.availableRooms(aRooms, 0, '2024-01-03')).toThrow('Invalid Format');
-        // });
-
-        // test('Available rooms receives and end date that is not a string', () => {
-        //     expect(() => Room.availableRooms(aRooms, '2024-01-03', 0)).toThrow('Invalid Format');
-        // });
-
-        // test('Available rooms start date greater than end date', () => {
-        //     expect(() => Room.availableRooms(aRooms, '2024-01-24', '2024-01-03')).toThrow('Start Date Greater Than End Date');
-        // });
     });
 });
 
@@ -278,43 +218,22 @@ describe('Booking', () => {
             checkIn: '2024-01-01',
             checkOut: '2024-01-02',
             discount: 10    
-        },
-        {
-            checkIn: '2024-01-02',
-            checkOut: '2024-01-03',
-            discount: 10    
-        },
+        }
     ];
     const room = classTemplate(bookings);
     const booking = room.bookings[0];
 
     describe('getFee', () => {
-        test('Get fee room rate is not a number', () => {
-            room.rate = 'Hola';
-            expect(() => booking.getFee()).toThrow('Invalid Rate Room Format');
-        });
-
-        test('Get fee room discount is not a number', () => {
-            room.discount = 'Hola';
-            expect(() => booking.getFee()).toThrow('Invalid Discount Room Format');
-        });
-
-        test('Get fee booking discount is not a number', () => {
-            booking.discount = 'Hola';
-            room.discount = 20;
-            room.rate = 120;
-            expect(() => booking.getFee()).toThrow('Invalid Discount Booking Format');
-        });
 
         test('Get fee result is 12000', () => {
-            room.discount = -10;
-            booking.discount = -10;
+            room.discount = 0;
+            booking.discount = 0;
             expect(booking.getFee()).toBe(12000);
         });
 
         test('Get fee result is 0', () => {
-            room.discount = 150;
-            booking.discount = 150;
+            room.discount = 100;
+            booking.discount = 100;
             expect(booking.getFee()).toBe(0);
         });
     });

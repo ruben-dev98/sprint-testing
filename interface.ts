@@ -8,8 +8,7 @@ export interface iDays {
 export interface iRoom {
     name: string,
     rate: number,
-    discount: number,
-    bookings?: Booking[]
+    discount: number
 }
 
 export interface iBookingTemplate {

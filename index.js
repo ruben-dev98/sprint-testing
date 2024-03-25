@@ -105,16 +105,8 @@ class Booking {
     }
 
     getFee() {
-        /*this.room.errorDiscount();
-        this.#errorDiscount();*/
-        return Math.min(0, room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE)));
+        return this.room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE));
     }
-
-    /*#errorDiscount() {
-        if (isNaN(this.discount)) throw new Error('Invalid Discount Booking Format');
-        if (this.discount > ONE_HUNDRED_PERCENTAGE) this.discount = ONE_HUNDRED_PERCENTAGE;
-        if (this.discount < ZERO_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
-    }*/
 }
 
 module.exports = {

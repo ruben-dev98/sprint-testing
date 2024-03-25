@@ -4,6 +4,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test-open": "jest --detectOpenHandles",
     "start": "ts-node index.ts"
   },
   "devDependencies": {
@@ -14,6 +15,7 @@
     "@types/node": "^20.11.30",
     "babel-jest": "^29.7.0",
     "ts-jest": "^29.1.2",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
   }
 }

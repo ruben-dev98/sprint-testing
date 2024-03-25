@@ -1,11 +1,13 @@
-const { classTemplate } = require('./functionHelpers.js');
-const { Booking, Room } = require("./index");
+import { iBookingTemplateSecond } from "./interface";
+
+const { classTemplate } = require('./functionHelpers');
+const { Room } = require("./index");
 
 
 describe('Room', () => {
 
     describe('occupiedRoom', () => {
-        const bookings = [
+        const bookings: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-01',
                 checkOut: '2024-01-02',
@@ -52,7 +54,7 @@ describe('Room', () => {
     });
 
     describe('occupancyPercentage', () => {
-        const bookings = [
+        const bookings: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-01',
                 checkOut: '2024-01-02',
@@ -100,7 +102,7 @@ describe('Room', () => {
     });
 
     describe('totalOccupancyPercentage', () => {
-        const bookings = [
+        const bookings: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-01',
                 checkOut: '2024-01-02',
@@ -113,7 +115,7 @@ describe('Room', () => {
             },
         ];
 
-        const bookingsRoom1 = [
+        const bookingsRoom1: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-03',
                 checkOut: '2024-01-04',
@@ -126,7 +128,7 @@ describe('Room', () => {
             },
         ];
 
-        const bookingsRoom2 = [
+        const bookingsRoom2: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-05',
                 checkOut: '2024-01-06',
@@ -142,6 +144,7 @@ describe('Room', () => {
         const room1 = classTemplate(bookingsRoom1);
         const room2 = classTemplate(bookingsRoom2);
         const aRooms = [room, room1, room2];
+
         test('Total ocupancy percentage is 100', () => {
             expect(Room.totalOccupancyPercentage(aRooms, '2024-01-01', '2024-01-06')).toBe(100);
         });
@@ -184,7 +187,7 @@ describe('Room', () => {
     });
 
     describe('availableRooms', () => {
-        const bookings = [
+        const bookings: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-01',
                 checkOut: '2024-01-02',
@@ -197,7 +200,7 @@ describe('Room', () => {
             },
         ];
 
-        const bookingsRoom1 = [
+        const bookingsRoom1: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-03',
                 checkOut: '2024-01-04',
@@ -210,7 +213,7 @@ describe('Room', () => {
             },
         ];
 
-        const bookingsRoom2 = [
+        const bookingsRoom2: iBookingTemplateSecond[] = [
             {
                 checkIn: '2024-01-05',
                 checkOut: '2024-01-06',
@@ -222,6 +225,7 @@ describe('Room', () => {
                 discount: 10    
             },
         ];
+
         const room = classTemplate(bookings);
         const room1 = classTemplate(bookingsRoom1);
         const room2 = classTemplate(bookingsRoom2);
@@ -269,7 +273,7 @@ describe('Room', () => {
 });
 
 describe('Booking', () => {
-    const bookings = [
+    const bookings: iBookingTemplateSecond[] = [
         {
             checkIn: '2024-01-01',
             checkOut: '2024-01-02',

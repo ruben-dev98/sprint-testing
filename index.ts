@@ -1,5 +1,4 @@
-import { classTemplate } from "./functionHelpers";
-import { iBooking, iBookingTemplateSecond, iDays, iRoom } from "./interface";
+import { iBooking, iDays, iRoom } from "./interface";
 
 const { getTotalDays } = require("./functionHelpers");
 
@@ -46,17 +45,10 @@ export class Room {
 
         const start: Date = new Date(startDate);
         const end: Date = new Date(endDate);
-        const numberOfDates: iDays = getTotalDays(start, end);
+        const numberOfDates: iDays = this.getTotalDays(start, end);
 
         return Math.round((numberOfDates.occupiedDays / numberOfDates.totalDays * ONE_HUNDRED_PERCENTAGE));
     }
-
-    /*errorDiscount(): void {
-        if (isNaN(this.discount)) throw new Error('Invalid Discount Room Format');
-
-        if (this.discount > 100) this.discount = 100;
-        if (this.discount < 0) this.discount = 0;
-    }*/
 
     priceToCent(): number {
         if (isNaN(this.rate)) throw new Error('Invalid Rate Room Format')
@@ -124,31 +116,4 @@ export class Booking {
         //this.#errorDiscount();
         return Math.min(0, this.room.getTotalDays(new Date(this.checkIn), new Date(this.checkOut)).totalDays * Math.round(this.room.priceToCent() - (this.room.priceToCent() * this.discount / ONE_HUNDRED_PERCENTAGE)));
     }
-
-    /*#errorDiscount() {
-        if (isNaN(this.discount)) throw new Error('Invalid Discount Booking Format');
-        if (this.discount > ONE_HUNDRED_PERCENTAGE) this.discount = ONE_HUNDRED_PERCENTAGE;
-        if (this.discount < ZERO_PERCENTAGE) this.discount = ZERO_PERCENTAGE;
-    }*/
 }
-
-const bookings: iBookingTemplateSecond[] = [
-    {
-        checkIn: '2024-01-01',
-        checkOut: '2024-01-02',
-        discount: 10    
-    },
-    {
-        checkIn: '2024-01-02',
-        checkOut: '2024-01-03',
-        discount: 20    
-    },
-];
-const room = classTemplate(bookings);
-const room1 = classTemplate(bookings);
-
-console.log(room);
-console.log(room1);
-
-console.log(room.isOccupied('2024-01-08'));
-//

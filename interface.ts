@@ -12,15 +12,6 @@ export interface iRoom {
     bookings?: Booking[]
 }
 
-export interface iBooking {
-    name: string,
-    email: string,
-    checkIn: string,
-    checkOut: string,
-    discount: number,
-    room: Room
-}
-
 export interface iBookingTemplate {
     name: string,
     email: string,
@@ -31,3 +22,8 @@ export interface iBookingTemplateSecond {
     checkOut: string,
     discount: number
 }
+
+export interface iBooking extends iBookingTemplate, iBookingTemplateSecond {
+    room: Room
+}
+

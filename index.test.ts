@@ -222,7 +222,7 @@ describe('Booking', () => {
     ];
     const room = createAnInstanceOfRoomWithBookings(bookings);
     const booking = room.bookings[0];
-
+    
     describe('getFee', () => {
 
         test('Get fee result is 12000', () => {

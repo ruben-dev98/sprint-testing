@@ -1,7 +1,7 @@
 import { Booking, Room } from "./index";
-import { iBookingTemplate, iBookingTemplateSecond, iRoom } from "./interface";
+import { iBookingTemplate, iRoom } from "./interface";
 
-export function classTemplate(bookings: iBookingTemplateSecond[]): Room {
+export function createAnInstanceOfRoomWithBookings(bookings: iBookingTemplate[]): Room {
     const roomTemplate: iRoom = { name: 'Double Bed', rate: 120, discount: 20 };
 
     const bookingTemplate: iBookingTemplate = {

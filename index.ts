@@ -97,11 +97,11 @@ export class Booking {
     room: Room;
 
     constructor(booking: iBooking) {
-        this.name = booking.name;
-        this.email = booking.email;
-        this.checkIn = booking.checkIn;
-        this.checkOut = booking.checkOut;
-        this.discount = booking.discount;
+        this.name = booking.name || '';
+        this.email = booking.email || '';
+        this.checkIn = booking.checkIn || '';
+        this.checkOut = booking.checkOut || '';
+        this.discount = booking.discount || 0;
         this.room = booking.room;
     }
 

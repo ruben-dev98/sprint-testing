@@ -12,17 +12,14 @@ export interface iRoom {
 }
 
 export interface iBookingTemplate {
-    name: string,
-    email: string,
+    name?: string,
+    email?: string,
+    checkIn?: string,
+    checkOut?: string,
+    discount?: number
 }
 
-export interface iBookingTemplateSecond {
-    checkIn: string,
-    checkOut: string,
-    discount: number
-}
-
-export interface iBooking extends iBookingTemplate, iBookingTemplateSecond {
+export interface iBooking extends iBookingTemplate {
     room: Room
 }
 
